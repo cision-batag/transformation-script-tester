@@ -80,70 +80,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/addon/edit/matchbrackets.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/addon/scroll/simplescrollbars.min.js"></script>
     <script>
-        /**
-         * Date parsing and formatting related functions.
-         */
-        const dateUtils = {
-            /**
-             * Converts the given date to UTC string with
-             * yyyy-MM-dd'T'HH:mm:ss'Z' format e.g.: 2022-02-14T20:52:30Z
-             *
-             * @param {Date} date - input date, or the current date if nothing has provided
-             * {string} - UTC date in string
-             */
-            toUtcString: function(date = new Date()) {
-                if (!(date instanceof Date)) {
-                    date = new Date(parseInt(date));
-                }
-                const pad = num => num.toString().padStart(2, '0');
-                const utcDate = [date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate()].map(pad);
-                const utcTime = [date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()].map(pad);
-                return `${utcDate.join('-')}T${utcTime.join(':')}Z`;
-            }
-        };
-
-
-        /**
-         * Common utilities which is intended to check value existence and normalization.
-         */
-        const commonUtils = {
-            NOT_PROVIDED: null,
-
-            /**
-             * Get normalized value, i.e. null for not defined value, otherwise null
-             * @param {Object} value - value to be normalized
-             * @returns {string}
-             */
-            normalize: function(value) {
-                return this.isNull(value) ? this.NOT_PROVIDED : value;
-            },
-
-            /**
-             * Checks if the value is defined or not empty
-             * @param {Object} value - value to be chekced
-             * @returns {boolean}
-             */
-            isDefined: function(value) {
-                if (this.isNull(value)) {
-                    return false;
-                }
-                if (typeof (value) === 'string') {
-                    return value.trim() !== '';
-                }
-                return true;
-            },
-
-            /**
-             * Checks if the provided value is not defined or null
-             * @param {Object} value - value to be checked
-             * @returns {boolean}
-             */
-            isNull: function(value) {
-                return value === undefined || value === null || value === "null";
-            }
-        };
-    </script>
-    <script>
         {
             const codeMirrorConfig = {
                 lineNumbers: true,
@@ -194,5 +130,8 @@
             evaluateScript();
         }
     </script>
+    <script src="common/utils.js"></script>
+    <script src="common/date-utils.js"></script>
+    <script src="wise/country-utils.js"></script>
   </body>
 </html>
