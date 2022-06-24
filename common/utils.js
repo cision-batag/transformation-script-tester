@@ -9,7 +9,7 @@ const commonUtils = {
      * @param {Object} value - value to be normalized
      * @returns {string}
      */
-    normalize: function(value) {
+    normalize: function (value) {
         return this.isNull(value) ? this.NOT_PROVIDED : value;
     },
 
@@ -18,7 +18,7 @@ const commonUtils = {
      * @param {Object} value - value to be chekced
      * @returns {boolean}
      */
-    isDefined: function(value) {
+    isDefined: function (value) {
         if (this.isNull(value)) {
             return false;
         }
@@ -33,7 +33,14 @@ const commonUtils = {
      * @param {Object} value - value to be checked
      * @returns {boolean}
      */
-    isNull: function(value) {
+    isNull: function (value) {
         return value === undefined || value === null || value === "null";
+    },
+
+    stringifyNonEmptyValues: function (transformed) {
+        Object.keys(transformed).forEach(
+            (field) => (!commonUtils.isDefined(transformed[field]) || transformed[field].length === 0) && delete transformed[field]
+        );
+        return JSON.stringify(transformed);
     }
 };
